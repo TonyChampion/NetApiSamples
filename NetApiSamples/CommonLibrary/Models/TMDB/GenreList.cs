@@ -9,6 +9,7 @@ namespace CommonLibrary.Models.TMDB
 {
     public class GenreList
     {
+        [JsonPropertyName("genres")]
         public IEnumerable<Genre> Genres { get; set; }
     }
 }

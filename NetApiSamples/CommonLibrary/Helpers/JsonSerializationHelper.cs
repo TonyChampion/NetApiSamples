@@ -6,6 +6,7 @@ using System.Text.Json.Serialization.Metadata;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using CommonLibrary.Models.TMDB;
 
 namespace CommonLibrary.Helpers
 {
@@ -20,5 +21,17 @@ namespace CommonLibrary.Helpers
                     : context
             };
         }
+    }
+
+    [JsonSerializable(typeof(Genre[]))]
+    public partial class GenreArrayJsonSerializerContext : JsonSerializerContext
+    {
+    }
+
+    [JsonSerializable(typeof(GenreList))]
+    [JsonSerializable(typeof(Genre[]))]
+    public partial class GenreListJsonSerializerContext : JsonSerializerContext
+    {
+
     }
 }

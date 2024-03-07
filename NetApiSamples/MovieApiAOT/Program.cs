@@ -5,12 +5,17 @@ using System.Text.Json.Serialization;
 using CommonLibrary.Models.TMDB;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
+using CommonLibrary.Helpers;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+    options.SerializerOptions.TypeInfoResolver = new GenreListJsonSerializerContext();
+
+    //options.SerializerOptions.TypeInfoResolverChain.Insert(0, GenreArrayJsonSerializerContext.Default);
+   // options.SerializerOptions.TypeInfoResolverChain.Insert(0, GenreListJsonSerializerContext.Default);
 });
 
 // Add services to the container.
@@ -31,7 +36,9 @@ var movieApi = app.MapGroup("/Movie");
 
 movieApi.MapGet("/GetGenres", async () =>
 {
-   return Results.Ok(await tmdbClient.GetGenresAsJsonAsync());
+    var genres = await tmdbClient.GetGenresAsync();
+
+   return Results.Ok(genres);
 });
 
 movieApi.MapGet("/GetMovies", async (int? page) =>
@@ -41,10 +48,3 @@ movieApi.MapGet("/GetMovies", async (int? page) =>
 
 app.Run();
 
-[JsonSerializable(typeof(GenreList))]
-[JsonSerializable(typeof(Genre))]
-[JsonSerializable(typeof(Movie))]
-[JsonSerializable(typeof(MovieListPage))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-}

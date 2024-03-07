@@ -30,7 +30,10 @@ namespace CommonLibrary.Services
 
         public async Task<GenreList> GetGenresAsync()
         {
-            return await _httpClient.GetFromJsonAsync<GenreList>(GetGenres);
+            // return await _httpClient.GetFromJsonAsync<GenreList>(GetGenres);
+            var json = await _httpClient.GetStringAsync(GetGenres);
+            var genreList = JsonSerializer.Deserialize<GenreList>(json, _jsonSerializerOptions);
+            return genreList;
         }
 
         public async Task<string> GetGenresAsJsonAsync()
@@ -58,13 +61,6 @@ namespace CommonLibrary.Services
     }
 
     [JsonSerializable(typeof(GenreList))]
-    [JsonSerializable(typeof(Genre))]
-    [JsonSerializable(typeof(IEnumerable<Genre>))]
-    [JsonSerializable(typeof(Movie))]
-    [JsonSerializable(typeof(Movie[]))]
-    [JsonSerializable(typeof(IEnumerable<Movie>))]
-    [JsonSerializable(typeof(Genre[]))]
-    [JsonSerializable(typeof(MovieListPage))]
     internal partial class TMDBJsonSerializerContext : JsonSerializerContext
     {
     }

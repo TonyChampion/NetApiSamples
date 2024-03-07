@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewIdentityEndpoints", "NewIdentityEndpoints\NewIdentityEndpoints.csproj", "{EEFD4C8B-F3D9-4E3A-A1D2-6E4D2CB53508}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance", "Performance", "{94642FD7-1422-4C9B-9D01-8DA274627C20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApi", "MovieApi\MovieApi.csproj", "{3BDD6ADE-B1B0-4801-8E6E-7B350514B741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApi", "MovieApi\MovieApi.csproj", "{3BDD6ADE-B1B0-4801-8E6E-7B350514B741}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4BB7DB73-5EA7-4332-ABF4-60D776332AA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{E7E80997-8BEC-4288-B513-BAD2CA13893E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLibrary", "CommonLibrary\CommonLibrary.csproj", "{E7E80997-8BEC-4288-B513-BAD2CA13893E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApiAOT", "MovieApiAOT\MovieApiAOT.csproj", "{24574836-5B7D-48C5-B7DC-9C81FA0344B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApiAOT", "MovieApiAOT\MovieApiAOT.csproj", "{24574836-5B7D-48C5-B7DC-9C81FA0344B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scalability", "Scalability", "{BC9092F9-EF14-4AA6-84D8-40BD04588A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApiVersioning", "MovieApiVersioning\MovieApiVersioning.csproj", "{D46A091F-BE2A-49CF-A342-D56A6B9583FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApiVersioning", "MovieApiVersioning\MovieApiVersioning.csproj", "{D46A091F-BE2A-49CF-A342-D56A6B9583FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenBasedApi", "TokenBasedApi\TokenBasedApi.csproj", "{DF8AA19A-92BB-4106-9749-51D36903A41A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{C6CCCC6D-8224-498F-A026-4F2D399F5CBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EEFD4C8B-F3D9-4E3A-A1D2-6E4D2CB53508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEFD4C8B-F3D9-4E3A-A1D2-6E4D2CB53508}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEFD4C8B-F3D9-4E3A-A1D2-6E4D2CB53508}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEFD4C8B-F3D9-4E3A-A1D2-6E4D2CB53508}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BDD6ADE-B1B0-4801-8E6E-7B350514B741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BDD6ADE-B1B0-4801-8E6E-7B350514B741}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BDD6ADE-B1B0-4801-8E6E-7B350514B741}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +43,10 @@ Global
 		{D46A091F-BE2A-49CF-A342-D56A6B9583FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D46A091F-BE2A-49CF-A342-D56A6B9583FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D46A091F-BE2A-49CF-A342-D56A6B9583FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF8AA19A-92BB-4106-9749-51D36903A41A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8AA19A-92BB-4106-9749-51D36903A41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8AA19A-92BB-4106-9749-51D36903A41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8AA19A-92BB-4106-9749-51D36903A41A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +56,7 @@ Global
 		{E7E80997-8BEC-4288-B513-BAD2CA13893E} = {4BB7DB73-5EA7-4332-ABF4-60D776332AA7}
 		{24574836-5B7D-48C5-B7DC-9C81FA0344B3} = {94642FD7-1422-4C9B-9D01-8DA274627C20}
 		{D46A091F-BE2A-49CF-A342-D56A6B9583FA} = {BC9092F9-EF14-4AA6-84D8-40BD04588A55}
+		{DF8AA19A-92BB-4106-9749-51D36903A41A} = {C6CCCC6D-8224-498F-A026-4F2D399F5CBB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {517ACC33-E12B-4238-9CDA-3510A97E79CB}

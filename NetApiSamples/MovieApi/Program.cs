@@ -22,10 +22,10 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<ITMDBCacheService, TMDBCacheService>();
 
 // Compression
-/*builder.Services.AddResponseCompression(options =>
+builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
-});*/
+});
 
 // Rate Limiting
 builder.Services.AddRateLimiter(_ => _
@@ -55,12 +55,12 @@ if (app.Environment.IsDevelopment())
 app.UseRateLimiter();
 
 // Compression
-//app.UseResponseCompression();
+app.UseResponseCompression();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers().RequireRateLimiting("fixed");
-
+//app.MapControllers().RequireAuthorization();
 app.Run();
