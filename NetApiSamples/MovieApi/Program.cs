@@ -1,6 +1,9 @@
 using CommonLibrary;
 using CommonLibrary.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
+using MovieApi.HealthChecks;
 using System.Net.Http.Headers;
 using System.Threading.RateLimiting;
 
@@ -38,17 +41,24 @@ builder.Services.AddRateLimiter(_ => _
     }));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Health Checks
+builder.Services.AddHealthChecks()
+    .AddCheck<TMDBHealthCheck>("TMDBService");
+
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Swagger");
+    });
 }
 
 // Rate Limiting
@@ -60,6 +70,15 @@ app.UseResponseCompression();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// Health Check Route
+app.MapHealthChecks("/health");
+
+app.UseHealthChecks("/health", new HealthCheckOptions
+{
+    // WriteResponse is a delegate used to customize the health check response.
+//    ResponseWriter = (httpContext, result) => HealthChecksHelper.WriteResponse(httpContext, result)
+});
 
 app.MapControllers().RequireRateLimiting("fixed");
 //app.MapControllers().RequireAuthorization();

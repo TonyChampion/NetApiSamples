@@ -1,0 +1,6 @@
+@AzureWorkflowAPI_HostAddress = http://localhost:5290
+
+GET {{AzureWorkflowAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

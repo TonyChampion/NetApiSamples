@@ -21,20 +21,20 @@ namespace MovieApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<GenreList> GetGenres()
+        public async Task<ActionResult<GenreList>> GetGenres()
         {
             return await _tmdbService.GetGenresAsync();
         }
 
         [HttpGet("[action]")]
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any, NoStore = false)]
-        public async Task<GenreList> GetHeaderCachedGenres()
+        public async Task<ActionResult<GenreList>> GetHeaderCachedGenres()
         {
             return await _tmdbService.GetGenresAsync();
         }
 
         [HttpGet("[action]")]
-        public async Task<GenreListCache> GetMemoryCachedGenres()
+        public async Task<ActionResult<GenreListCache>> GetMemoryCachedGenres()
         {
             (GenreList list, bool isCached) = await _tmdbCacheService.GetGenresAsync();
             return new GenreListCache()
@@ -45,7 +45,7 @@ namespace MovieApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<MovieListPage> GetMovies(int? page)
+        public async Task<ActionResult<MovieListPage>> GetMovies(int? page)
         {
             return await _tmdbService.GetMoviesAsync(page);
         }

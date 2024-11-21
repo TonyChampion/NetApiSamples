@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Asp.Versioning.Conventions;
 using CommonLibrary;
 using CommonLibrary.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using MovieApiVersioning;
 using System.Net.Http.Headers;
@@ -18,6 +19,7 @@ builder.Services.AddHttpClient<ITMDBService, TMDBService>((serviceProvider, clie
     client.DefaultRequestHeaders.Authorization
             = new AuthenticationHeaderValue("Bearer", configuration[GlobalConstants.TMDBApiKey]);
 });
+
 
 /*builder.Services.AddResponseCompression(options =>
 {
@@ -58,37 +60,23 @@ builder.Services.AddApiVersioning(
                         options.SubstituteApiVersionInUrl = true;
                     });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen((options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Version = "Version 1",
-        Title = "Movie API V1",
-        Description = "A movie API"
-    });
-
-    options.SwaggerDoc("v2", new OpenApiInfo
-    {
-        Version = "Version 2",
-        Title = "Movie API V2",
-        Description = "A movie API"
-    });
-}));
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi("v1");
+builder.Services.AddOpenApi("v2");
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.MapOpenApi();
+
     app.UseSwaggerUI(options =>
     {
         var descriptions = app.DescribeApiVersions();
         foreach (var description in descriptions)
         {
-            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var url = $"/openapi/{description.GroupName}.json";
             var name = description.GroupName.ToUpperInvariant();
             options.SwaggerEndpoint(url, name);
         }

@@ -21,14 +21,14 @@ namespace TokenBasedApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<GenreList> GetGenres()
+        public async Task<ActionResult<GenreList>> GetGenres()
         {
             return await _tmdbService.GetGenresAsync();
         }
 
 
         [HttpGet("[action]")]
-        public async Task<MovieExtendedListPage> GetMovies(int? page)
+        public async Task<ActionResult<MovieExtendedListPage>> GetMovies(int? page)
         {
             return await _tmdbService.GetMoviesExtendedAsync(page);
         }

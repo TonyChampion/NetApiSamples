@@ -21,14 +21,14 @@ namespace MovieApiVersioning.Controllers.V1
         }
 
         [HttpGet("[action]")]
-        public async Task<GenreList> GetGenres()
+        public async Task<ActionResult<GenreList>> GetGenres()
         {
             return await _tmdbService.GetGenresAsync();
         }
 
 
         [HttpGet("[action]")]
-        public async Task<MovieListPage> GetMovies(int? page)
+        public async Task<ActionResult<MovieListPage>> GetMovies(int? page)
         {
             return await _tmdbService.GetMoviesAsync(page);
         }
