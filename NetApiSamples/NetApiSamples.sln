@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureWorkflowFunction", "Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureWorkflowCommon", "AzureWorkflowCommon\AzureWorkflowCommon.csproj", "{C8B02EE4-F185-42A3-B108-7DC5BBC47E49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApiBackground", "MovieApiBackground\MovieApiBackground.csproj", "{236131ED-E6F1-463D-A7CC-2CF287602A7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{C8B02EE4-F185-42A3-B108-7DC5BBC47E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8B02EE4-F185-42A3-B108-7DC5BBC47E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8B02EE4-F185-42A3-B108-7DC5BBC47E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236131ED-E6F1-463D-A7CC-2CF287602A7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236131ED-E6F1-463D-A7CC-2CF287602A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236131ED-E6F1-463D-A7CC-2CF287602A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236131ED-E6F1-463D-A7CC-2CF287602A7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{204D06AB-F2FB-4091-9383-D5D02494344C} = {D1F02914-9EE1-4EA2-BF36-D09ADE78EE78}
 		{3A67C264-03CC-4B83-BEC5-29DADFA73514} = {D1F02914-9EE1-4EA2-BF36-D09ADE78EE78}
 		{C8B02EE4-F185-42A3-B108-7DC5BBC47E49} = {D1F02914-9EE1-4EA2-BF36-D09ADE78EE78}
+		{236131ED-E6F1-463D-A7CC-2CF287602A7C} = {BC9092F9-EF14-4AA6-84D8-40BD04588A55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {517ACC33-E12B-4238-9CDA-3510A97E79CB}

@@ -3,6 +3,7 @@ using CommonLibrary.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
+using MovieApi.Endpoints;
 using MovieApi.HealthChecks;
 using System.Net.Http.Headers;
 using System.Threading.RateLimiting;
@@ -40,7 +41,10 @@ builder.Services.AddRateLimiter(_ => _
         options.QueueLimit = 2;
     }));
 
-builder.Services.AddControllers();
+// Caching
+builder.Services.AddOutputCache();
+
+//builder.Services.AddControllers();
 
 // Health Checks
 builder.Services.AddHealthChecks()
@@ -50,6 +54,32 @@ builder.Services.AddHealthChecks()
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+// Rate Limiting
+app.UseRateLimiter();
+
+// Compression
+app.UseResponseCompression();
+
+app.UseHttpsRedirection();
+
+// Health Check Route
+app.MapHealthChecks("/health");
+
+app.UseHealthChecks("/health", new HealthCheckOptions
+{
+    // WriteResponse is a delegate used to customize the health check response.
+//    ResponseWriter = (httpContext, result) => HealthChecksHelper.WriteResponse(httpContext, result)
+});
+
+// Caching
+app.UseOutputCache();
+
+app.MapMovieEndpoints();
+
+//app.MapControllers().RequireRateLimiting("fixed");
+//app.MapControllers().RequireAuthorization();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -61,25 +91,4 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Rate Limiting
-app.UseRateLimiter();
-
-// Compression
-app.UseResponseCompression();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-// Health Check Route
-app.MapHealthChecks("/health");
-
-app.UseHealthChecks("/health", new HealthCheckOptions
-{
-    // WriteResponse is a delegate used to customize the health check response.
-//    ResponseWriter = (httpContext, result) => HealthChecksHelper.WriteResponse(httpContext, result)
-});
-
-app.MapControllers().RequireRateLimiting("fixed");
-//app.MapControllers().RequireAuthorization();
 app.Run();

@@ -1,10 +1,12 @@
 using Asp.Versioning;
+using Asp.Versioning.Builder;
 using Asp.Versioning.Conventions;
 using CommonLibrary;
 using CommonLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using MovieApiVersioning;
+using MovieApiVersioning.Endpoints;
 using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,13 +28,12 @@ builder.Services.AddHttpClient<ITMDBService, TMDBService>((serviceProvider, clie
     options.EnableForHttps = true;
 });*/
 
-builder.Services.AddControllers();
-
 builder.Services.AddApiVersioning(
                     options =>
                     {
                         // reporting api versions will return the headers
                         // "api-supported-versions" and "api-deprecated-versions"
+                        options.DefaultApiVersion = new ApiVersion(1);
                         options.ReportApiVersions = true;
                         options.ApiVersionReader = ApiVersionReader.Combine(
                                     new UrlSegmentApiVersionReader(),
@@ -40,13 +41,6 @@ builder.Services.AddApiVersioning(
                                     new HeaderApiVersionReader("X-Version"),
                                     new MediaTypeApiVersionReader("x-version"));
 
-                    })
-                    .AddMvc(
-                    options =>
-                    {
-                        // automatically applies an api version based on the name of
-                        // the defining controller's namespace
-                        options.Conventions.Add(new VersionByNamespaceConvention());
                     })
                     .AddApiExplorer(
                     options =>
@@ -65,6 +59,18 @@ builder.Services.AddOpenApi("v1");
 builder.Services.AddOpenApi("v2");
 
 var app = builder.Build();
+
+ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(1)
+    .HasApiVersion(2)
+    .ReportApiVersions()
+    .Build();
+
+RouteGroupBuilder routeGroupBuilder = app.MapGroup("/api/v{apiVersion:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+
+routeGroupBuilder.MapMovieV1Endpoints();
+routeGroupBuilder.MapMovieV2Endpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -87,8 +93,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
-app.MapControllers();
 
 app.Run();

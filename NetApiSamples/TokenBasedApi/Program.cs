@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Http.Headers;
 using System.Text;
+using TokenBasedApi.Endpoints;
 using TokenBasedApi.Handlers;
 using TokenBasedApi.Requirements;
+using TokenBasedApi.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,9 +72,11 @@ builder.Services.AddHttpClient<ITMDBService, TMDBService>((serviceProvider, clie
 
 builder.Services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
 
-builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
 
 var app = builder.Build();
 
@@ -80,6 +84,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Swagger");
@@ -91,6 +96,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+RouteGroupBuilder movieApi = app.MapGroup("/Movie").RequireAuthorization(["AtLeast21"]);
+movieApi.MapMovieEndpoints();
+
+app.MapTokenEndpoints();
 
 app.Run();
