@@ -44,8 +44,6 @@ builder.Services.AddRateLimiter(_ => _
 // Caching
 builder.Services.AddOutputCache();
 
-//builder.Services.AddControllers();
-
 // Health Checks
 builder.Services.AddHealthChecks()
     .AddCheck<TMDBHealthCheck>("TMDBService");
@@ -69,17 +67,17 @@ app.MapHealthChecks("/health");
 app.UseHealthChecks("/health", new HealthCheckOptions
 {
     // WriteResponse is a delegate used to customize the health check response.
-//    ResponseWriter = (httpContext, result) => HealthChecksHelper.WriteResponse(httpContext, result)
+    // ResponseWriter = (httpContext, result) => HealthChecksHelper.WriteResponse(httpContext, result)
 });
 
 // Caching
 app.UseOutputCache();
 
+// Rate limiting
+//RouteGroupBuilder routeGroupBuilder = app.MapGroup("").RequireRateLimiting("fixed");
+//routeGroupBuilder.MapMovieEndpoints();
+
 app.MapMovieEndpoints();
-
-//app.MapControllers().RequireRateLimiting("fixed");
-//app.MapControllers().RequireAuthorization();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -88,6 +86,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Swagger");
+        options.EnableTryItOutByDefault();
     });
 }
 

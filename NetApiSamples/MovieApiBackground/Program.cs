@@ -67,6 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Swagger");
+        options.EnableTryItOutByDefault();
     });
 }
 

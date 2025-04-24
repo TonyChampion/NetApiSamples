@@ -14,7 +14,7 @@ namespace MovieApi.HealthChecks
     
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            bool isHealthy = false;
+            bool isHealthy = true;
 
             try
             {

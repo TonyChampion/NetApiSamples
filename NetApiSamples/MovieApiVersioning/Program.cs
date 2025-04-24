@@ -86,13 +86,10 @@ if (app.Environment.IsDevelopment())
             var name = description.GroupName.ToUpperInvariant();
             options.SwaggerEndpoint(url, name);
         }
+        options.EnableTryItOutByDefault();
     });
 }
 
-//app.UseResponseCompression();
-
 app.UseHttpsRedirection();
-
-
 
 app.Run();

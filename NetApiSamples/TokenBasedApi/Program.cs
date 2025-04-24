@@ -18,6 +18,10 @@ var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("Basic", policy =>
+        policy.RequireRole("admin")
+               .RequireClaim("org", "ACME"));
+
     options.AddPolicy("AtLeast21", policy =>
         policy.Requirements.Add(new MinimumAgeRequirement(21)));
 });
@@ -88,6 +92,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "Swagger");
+        options.EnableTryItOutByDefault();
     });
 }
 
