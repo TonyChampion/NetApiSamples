@@ -1,6 +1,7 @@
 using CommonLibrary;
 using CommonLibrary.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.RateLimiting;
 using MovieApi.Endpoints;
@@ -43,6 +44,7 @@ builder.Services.AddRateLimiter(_ => _
 
 // Caching
 builder.Services.AddOutputCache();
+builder.Services.AddHybridCache();
 
 // Health Checks
 builder.Services.AddHealthChecks()

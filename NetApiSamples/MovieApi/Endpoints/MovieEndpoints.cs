@@ -47,6 +47,15 @@ namespace MovieApi.Endpoints
             .WithName("GetMemoryCachedGenres")
             .WithTags(MovieTag)
             .Produces<GenreListCache>(StatusCodes.Status200OK);
+
+            app.MapGet("/api/movie/getHybridCachedgenres", async (ITMDBCacheService tmdbCacheService) =>
+            {
+                return await tmdbCacheService.GetHybridCachedGenresAsync();
+            })
+            .WithName("GetHybridCachedGenres")
+            .WithTags(MovieTag)
+            .Produces<GenreListCache>(StatusCodes.Status200OK);
+
         }
     }
 }

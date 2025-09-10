@@ -10,5 +10,6 @@ namespace CommonLibrary.Services
     public interface ITMDBCacheService
     {
         Task<(GenreList list, bool isCached)> GetGenresAsync();
+        Task<GenreList> GetHybridCachedGenresAsync();
     }
 }
